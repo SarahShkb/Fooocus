@@ -39,6 +39,7 @@ class ContentFilter:
         profanity.add_censor_words(self.italian_bad_words)
 
         is_bad = profanity.contains_profanity(text)
+        print(text)
         print(f"is bad:{is_bad}")
         return {"is_inappropriate": is_bad, "reason": "profanity"}
     
