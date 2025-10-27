@@ -45,7 +45,9 @@ def generate_clicked(task: worker.AsyncTask):
 
     content_filter = ContentFilter()
 
-    is_inappropriate, reason = content_filter.check_prompt(prompt)
+    check_prompt = content_filter.check_prompt(prompt)
+    is_inappropriate = check_prompt["is_inappropriate"]
+    reason = check_prompt["reason"]
     if is_inappropriate:
         print(f"BLOCKED! reason: {reason}")
         return
