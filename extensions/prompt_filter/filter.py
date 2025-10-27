@@ -138,7 +138,7 @@ class ContentFilter:
             second_layer_check = self.layer2_openai(text)
             if (second_layer_check.results[0].flagged):
                 which_flag = ""
-                for key, value in second_layer_check.results[0].categories:
+                for key, value in second_layer_check.results[0]["categories"]:
                     if value:
                         which_flag = key
                         break
@@ -149,7 +149,7 @@ class ContentFilter:
     
         third_layer_check = self.layer3_llama(text)
         if (third_layer_check["blocked"] == True):
-            return {"is_inappropriate": True, "layer": "3", "reason": third_layer_check.reason}
+            return {"is_inappropriate": True, "layer": "3", "reason": third_layer_check["reason"]}
 
 
         return {"is_inappropriate": False, "reason": None}
