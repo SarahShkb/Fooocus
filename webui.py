@@ -43,8 +43,9 @@ def generate_clicked(task: worker.AsyncTask):
     if len(task.args) == 0:
         return
 
-    content_filter = ContentFilter()
+    print(task)
 
+    content_filter = ContentFilter()
     check_prompt = content_filter.check_prompt(prompt)
     is_inappropriate = check_prompt["is_inappropriate"]
     layer = check_prompt["layer"]
