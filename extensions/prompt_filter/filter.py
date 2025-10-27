@@ -39,7 +39,7 @@ class ContentFilter:
         profanity.add_censor_words(self.italian_bad_words)
 
         is_bad = profanity.contains_profanity(text)
-        return {"safe": not is_bad, "blocked": is_bad}
+        return {"is_inappropriate": is_bad, "reason": "profanity"}
     
     def layer2_openai(self, text: str) -> dict:
         client = OpenAI()
@@ -130,8 +130,8 @@ class ContentFilter:
         
         # 1st layer check (very obvious cases)
         first_layer_check = self.layer1_regex(text)
-        if (not first_layer_check["safe"]):
-            return {"blocked": True, layer: "1", "unsafe_prompt": text}
+        if (first_layer_check["is_inappropriate"]):
+            return {"is_inappropriate": True, "layer": "1", "reason": first_layer_check["reason"]}
 
         # 2nd layer check (using ML)
         second_layer_check = self.layer2_openai(text)
@@ -142,8 +142,11 @@ class ContentFilter:
                     which_flag = key
                     break
             
-            return {"blocked": True, layer: "2", "unsafe_prompt":text, "category": which_flag}
+            return {"is_inappropriate": True, "layer": "2", "reason": which_flag}
     
         third_layer_check = self.layer3_llama(text)
-        print(third_layer_check)
-        return third_layer_check
+        if (third_layer_check.blocked):
+            return {"is_inappropriate": True, "layer": "3", "reason": third_layer_check.reason}
+
+
+        return {"is_inappropriate": False, "reason": None}
