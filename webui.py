@@ -47,9 +47,10 @@ def generate_clicked(task: worker.AsyncTask):
 
     check_prompt = content_filter.check_prompt(prompt)
     is_inappropriate = check_prompt["is_inappropriate"]
+    layer = check_prompt["layer"]
     reason = check_prompt["reason"]
-    if is_inappropriate:
-        print(f"BLOCKED! reason: {reason}")
+    if is_inappropriate == True:
+        print(f"BLOCKED! layer:{layer}, reason: {reason}")
         return
     
 
