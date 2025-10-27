@@ -24,6 +24,9 @@ from modules.ui_gradio_extensions import reload_javascript
 from modules.auth import auth_enabled, check_auth
 from modules.util import is_json
 
+from extensions.prompt_filter import ContentFilter
+
+
 def get_task(*args):
     args = list(args)
     args.pop(0)
@@ -39,6 +42,14 @@ def generate_clicked(task: worker.AsyncTask):
 
     if len(task.args) == 0:
         return
+
+    content_filter = ContentFilter()
+
+    is_inappropriate, reason = content_filter.check_prompt(prompt)
+    if is_inappropriate:
+        print(f"BLOCKED! reason: {reason}")
+        return
+    
 
     execution_start_time = time.perf_counter()
     finished = False

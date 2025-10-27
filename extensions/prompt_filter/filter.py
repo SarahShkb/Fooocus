@@ -126,7 +126,7 @@ class ContentFilter:
             }
     
 
-    def filter_prompt(self, text: str) -> Dict:
+    def check_prompt(self, text: str) -> Dict:
         
         # 1st layer check (very obvious cases)
         first_layer_check = self.layer1_regex(text)
