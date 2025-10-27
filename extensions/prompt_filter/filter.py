@@ -152,4 +152,4 @@ class ContentFilter:
             return {"is_inappropriate": True, "layer": "3", "reason": third_layer_check["reason"]}
 
 
-        return {"is_inappropriate": False, "reason": None}
+        return {"is_inappropriate": False, "layer": None, "reason": None}
