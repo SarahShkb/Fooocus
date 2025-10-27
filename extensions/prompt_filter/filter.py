@@ -37,7 +37,8 @@ class ContentFilter:
         profanity.load_censor_words()
         self.italian_bad_words = self.load_it_bad_words()
         profanity.add_censor_words(self.italian_bad_words)
-
+        is_bad = profanity.contains_profanity(text)
+        
         return {"is_inappropriate": is_bad, "reason": "profanity"}
     
     def layer2_openai(self, text: str) -> dict:
