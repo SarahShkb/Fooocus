@@ -148,7 +148,7 @@ class ContentFilter:
             pass
     
         third_layer_check = self.layer3_llama(text)
-        if (third_layer_check.blocked):
+        if (third_layer_check["blocked"] == True):
             return {"is_inappropriate": True, "layer": "3", "reason": third_layer_check.reason}
 
 
