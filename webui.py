@@ -51,6 +51,7 @@ def generate_clicked(task: worker.AsyncTask):
     reason = check_prompt["reason"]
     if is_inappropriate == True:
         print(f"BLOCKED! layer:{layer}, reason: {reason}")
+        gr.Warning("This prompt has been blocked due to inappropriate content.")
         return
     
 
